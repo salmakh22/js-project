@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Interactive Photo Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        figure {
+            margin: 0;
+            text-align: center;
+        }
+        figure img {
+            width: 150px;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        #preview {
+            margin-top: 20px;
+            padding: 10px;
+            border: 2px solid #000;
+            min-height: 200px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body onload="initializeGallery()">
+    <h1>Accessible Photo Gallery</h1>
+    <div id="preview">Hover over an image below to display here.</div>
+    <div id="gallery">
+        <figure>
+            <img src="image1.jpg" alt="A beautiful sunset over the ocean" tabindex="0">
+            <figcaption>Sunset</figcaption>
+        </figure>
+        <figure>
+            <img src="image2.jpg" alt="A serene mountain landscape" tabindex="0">
+            <figcaption>Mountain</figcaption>
+        </figure>
+        <figure>
+            <img src="image3.jpg" alt="A bustling cityscape at night" tabindex="0">
+            <figcaption>City</figcaption>
+        </figure>
+        <figure>
+            <img src="image4.jpg" alt="A vibrant forest trail in autumn" tabindex="0">
+            <figcaption>Forest</figcaption>
+        </figure>
+        <figure>
+            <img src="image5.jpg" alt="A peaceful beach with clear blue water" tabindex="0">
+            <figcaption>Beach</figcaption>
+        </figure>
+        <figure>
+            <img src="image6.jpg" alt="A calm desert with dunes under the starry sky" tabindex="0">
+            <figcaption>Desert</figcaption>
+        </figure>
+    </div>
+    <script>
+        function initializeGallery() {
+            console.log("Gallery initialized.");
+            addTabFocus();
+            const images = document.querySelectorAll('#gallery img');
+
+            images.forEach(image => {
+                image.addEventListener('mouseover', updatePreview);
+                image.addEventListener('mouseleave', resetPreview);
+                image.addEventListener('focus', updatePreview);
+                image.addEventListener('blur', resetPreview);
+            });
+        }
+
+        function updatePreview(event) {
+            const preview = document.getElementById('preview');
+            const img = event.target;
+            preview.style.backgroundImage = `url(${img.src})`;
+            preview.style.backgroundSize = "cover";
+            preview.textContent = img.alt;
+            console.log(`Preview updated: ${img.alt}`);
+        }
+
+        function resetPreview() {
+            const preview = document.getElementById('preview');
+            preview.style.backgroundImage = '';
+            preview.textContent = 'Hover over an image below to display here.';
+            console.log("Preview reset.");
+        }
+
+        function addTabFocus() {
+            const images = document.querySelectorAll('#gallery img');
+            images.forEach((img, index) => {
+                img.setAttribute('tabindex', index + 1);
+                console.log(`Tabindex added to image ${index + 1}`);
+            });
+        }
+    </script>
+</body>
+</html>
