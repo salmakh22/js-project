@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Photo Gallery</title>
+    <style>
+        #image {
+            width: 100%;
+            height: 200px;
+            border: 2px solid #ddd;
+            text-align: center;
+            line-height: 200px;
+            font-size: 20px;
+            color: #666;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+            background-size: cover;
+        }
+        .gallery img {
+            width: 150px;
+            height: 100px;
+            margin: 10px;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+            border-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="image">Hover over an image below to display here.</div>
+    <div class="gallery">
+        <img src="img1.jpg" alt="Description of Image 1" onmouseover="upDate(this)" onmouseout="unDo()">
+        <img src="img2.jpg" alt="Description of Image 2" onmouseover="upDate(this)" onmouseout="unDo()">
+        <img src="img3.jpg" alt="Description of Image 3" onmouseover="upDate(this)" onmouseout="unDo()">
+    </div>
+
+    <script>
+        // Function to handle mouseover event
+        function upDate(previewPic) {
+            // Update the background image of the #image div
+            const imageDiv = document.getElementById("image");
+            imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
+            imageDiv.style.backgroundSize = "cover";
+
+            // Update the text of the #image div to the alt text of the image
+            imageDiv.innerHTML = previewPic.alt;
+        }
+
+        // Function to handle mouseout event
+        function unDo() {
+            // Reset the background image of the #image div
+            const imageDiv = document.getElementById("image");
+            imageDiv.style.backgroundImage = ""; // Reset to default
+            imageDiv.innerHTML = "Hover over an image below to display here."; // Reset text
+        }
+    </script>
+</body>
+</html>
